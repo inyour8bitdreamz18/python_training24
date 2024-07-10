@@ -1,2 +1,2 @@
 # python_training24
-python training 24
+Repository for python training (2024)
