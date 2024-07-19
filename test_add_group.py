@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
+from selenium import wd
 import unittest
 from group import Group
 
 
 class TestAddGroup(unittest.TestCase):
     def setUp(self):
-        self.wd = webdriver.Firefox()
+        self.wd = wd.Firefox()
         self.wd.implicitly_wait(60)
 
     def open_home_page(self, wd):
