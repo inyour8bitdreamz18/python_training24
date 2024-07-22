@@ -1,18 +1,5 @@
 # -*- coding: utf-8 -*-
-import pytest
 from model.group import Group
-from fixture.application import Application
-
-# Функция, инициализирующая Фикстуру (обязательна метка перед самой функцией)
-@pytest.fixture
-def app(request):
-    # Создает Фикстуру
-    fixture = Application()
-    # Разрушает Фикстуру
-    request.addfinalizer(fixture.destroy)
-    # Возвращает Фикстуру
-    return  fixture
-
 
 def test_add_group(app):
     #Login, logout теперь хранятся в app.session

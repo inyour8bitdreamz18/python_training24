@@ -1,16 +1,5 @@
 # -*- coding: utf-8 -*-
-import pytest
 from model.contact import Contact
-from fixture.application import Application
-
-@pytest.fixture
-def app(request):
-    # Создает Фикстуру
-    fixture =Application()
-    # Разрушает Фикстуру
-    request.addfinalizer(fixture.destroy)
-    # Возвращает Фикстуру
-    return  fixture
 
 def test_add_contact(app):
     app.open_home_page()
