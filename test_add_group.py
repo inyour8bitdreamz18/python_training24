@@ -4,7 +4,7 @@ from group import Group
 from application import Application
 
 # Функция, инициализирующая Фикстуру (обязательна метка перед самой функцией)
-@pytest.fixture()
+@pytest.fixture
 def app(request):
     # Создает Фикстуру
     fixture =Application()
