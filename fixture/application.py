@@ -8,7 +8,7 @@ class Application:
     def __init__(self):
         self.wd = wd.Firefox()
         self.wd.implicitly_wait(30)
-        #ссылка на файл SessionHelper,GroupHelper
+        #ссылка на файл SessionHelper, GroupHelper, ContactHelper
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
