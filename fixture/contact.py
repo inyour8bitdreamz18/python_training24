@@ -84,7 +84,7 @@ class ContactHelper:
     def modify_first_contact(self, contact):
         wd = self.app.wd
         self.open_contact_table()
-        # open contact editing panel
+        # open first contact editing panel
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # fill data
         self.fill_data(contact)
