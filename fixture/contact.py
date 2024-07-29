@@ -83,6 +83,7 @@ class ContactHelper:
 
     def modify_first_contact(self, contact):
         wd = self.app.wd
+        self.open_contact_table()
         # open contact editing panel
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # fill data
@@ -90,13 +91,26 @@ class ContactHelper:
         # submit contact editing
         wd.find_element_by_xpath("//input[20]").click()
 
+
     def delete_first_contact(self):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        self.open_contact_table()
+        #wd.find_element_by_name("selected[]").click()
+        self.select_contact()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         #wd.switch_to.alert.accept()
+
+
+    def select_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td").click()
 
 
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
+
+
+    def open_contact_table(self):
+        wd = self.app.wd
+        wd.get("http://localhost/addressbook/")
