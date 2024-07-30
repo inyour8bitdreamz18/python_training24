@@ -9,6 +9,7 @@ class ContactHelper:
     def create(self, contact):
         wd = self.app.wd
         # click to add new contact
+        self.open_contact_table()
         wd.find_element_by_link_text("add new").click()
         self.fill_contact_form(contact)
         # submit contact creation
@@ -47,7 +48,8 @@ class ContactHelper:
 
     def open_contact_table(self):
         wd = self.app.wd
-        wd.get("http://localhost/addressbook/")
+        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_xpath("//input[@name='searchstring']")) > 0):
+            wd.get("http://localhost/addressbook/")
 
 
     def change_field_value(self, field_name, text):
@@ -81,10 +83,10 @@ class ContactHelper:
         self.change_field_value("homepage", contact.homepage)
         self.change_list_value("bday", contact.bday)
         self.change_list_value("bmonth", contact.bmonth)
-        self.change_list_value("byear", contact.byear)
+        self.change_field_value("byear", contact.byear)
         self.change_list_value("aday", contact.aday)
         self.change_list_value("amonth", contact.amonth)
-        self.change_list_value("ayear", contact.ayear)
+        self.change_field_value("ayear", contact.ayear)
 
     def count(self):
         wd = self.app.wd
