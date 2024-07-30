@@ -54,7 +54,15 @@ class ContactHelper:
         wd = self.app.wd
         if text is not None:
             wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
+
+    def change_list_value(self, list_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(list_name).click()
+            wd.find_element_by_name(list_name).send_keys(text)
+
 
     def fill_contact_form(self, contact):
         self.change_field_value("firstname", contact.firstname)
@@ -71,12 +79,12 @@ class ContactHelper:
         self.change_field_value("work", contact.work)
         self.change_field_value("fax", contact.fax)
         self.change_field_value("homepage", contact.homepage)
-        self.change_field_value("bday", contact.bday)
-        self.change_field_value("bmonth", contact.bmonth)
-        self.change_field_value("byear", contact.byear)
-        self.change_field_value("aday", contact.aday)
-        self.change_field_value("amonth", contact.amonth)
-        self.change_field_value("ayear", contact.ayear)
+        self.change_list_value("bday", contact.bday)
+        self.change_list_value("bmonth", contact.bmonth)
+        self.change_list_value("byear", contact.byear)
+        self.change_list_value("aday", contact.aday)
+        self.change_list_value("amonth", contact.amonth)
+        self.change_list_value("ayear", contact.ayear)
 
     def count(self):
         wd = self.app.wd
