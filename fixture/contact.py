@@ -10,7 +10,6 @@ class ContactHelper:
         wd = self.app.wd
         # click to add new contact
         wd.find_element_by_link_text("add new").click()
-        # init contact creation
         self.fill_contact_form(contact)
         # submit contact creation
         wd.find_element_by_xpath("//input[20]").click()
@@ -31,12 +30,12 @@ class ContactHelper:
     def delete_first_contact(self):
         wd = self.app.wd
         self.open_contact_table()
-        self.select_contact()
+        self.select_first_contact()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         #wd.switch_to.alert.accept()
 
 
-    def select_contact(self):
+    def select_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td").click()
 
