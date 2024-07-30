@@ -77,3 +77,8 @@ class ContactHelper:
         self.change_field_value("aday", contact.aday)
         self.change_field_value("amonth", contact.amonth)
         self.change_field_value("ayear", contact.ayear)
+
+    def count(self):
+        wd = self.app.wd
+        self.open_contact_table()
+        return len(wd.find_elements_by_xpath("//table[@id='maintable']/tbody/tr[2]/td"))
