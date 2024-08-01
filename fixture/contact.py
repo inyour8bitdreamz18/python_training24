@@ -91,4 +91,4 @@ class ContactHelper:
     def count(self):
         wd = self.app.wd
         self.open_contact_table()
-        return len(wd.find_elements_by_xpath("//table[@id='maintable']/tbody/tr[2]/td"))
+        return len(wd.find_elements_by_xpath("//td/input"))
