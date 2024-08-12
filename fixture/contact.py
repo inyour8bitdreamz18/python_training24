@@ -1,4 +1,5 @@
 #Здесь хранятся все вспомогательные методы для работы с контактами
+from model.contact import Contact
 
 class ContactHelper:
 
@@ -92,3 +93,15 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contact_table()
         return len(wd.find_elements_by_xpath("//td/input"))
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_contact_table()
+        contacts = []
+        for element in wd.find_elements_by_css_selector("tr[name=entry]"):
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            #td:not([class]):nth-child(2)
+            lastname_info = element.find_element_by_css_selector("td:not([class]):nth-child(2)").text
+            firstname_info = element.find_element_by_css_selector("td:not([class]):nth-child(3)").text
+            contacts.append(Contact(firstname=firstname_info, lastname=lastname_info, id=id))
+        return contacts
