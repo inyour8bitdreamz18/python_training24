@@ -5,9 +5,10 @@ def test_modify_first_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="Firstname", lastname="Lastname"))
     old_contacts = app.contact.get_contact_list()
-    contact = Contact(firstname="Annuta", lastname="", address="Red street", mobile="", email="",
+    contact = Contact(firstname="Annuta_modified", lastname="Pankova_modified", address="Red street", mobile="", email="",
                                email2="", email3="", nickname="", company="", title="",
                                home="", work="QA", fax="+0", homepage="", bday="5", bmonth="April", byear="1990", aday="", amonth="", ayear="")
+    contact.id = old_contacts[0].id
     app.contact.modify_first_contact(contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)

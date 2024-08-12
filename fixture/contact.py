@@ -26,7 +26,7 @@ class ContactHelper:
         # fill data
         self.fill_contact_form(contact)
         # submit contact editing
-        wd.find_element_by_xpath("//input[20]").click()
+        wd.find_element_by_name("update").click()
 
 
     def delete_first_contact(self):
