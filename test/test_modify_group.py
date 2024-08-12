@@ -1,17 +1,19 @@
 from model.group import Group
+from random import randrange
 # Login, logout теперь хранятся в conftest
 
-def test_modify_first_group(app):
+def test_modify_some_group(app):
     if app.group.count() == 0:
         app.group.create(Group(name="test_name", header="test_header", footer="test_footer"))
     old_groups = app.group.get_group_list()
     group = Group(name="Edited name", header="Edited header", footer="Edited footer")
-    group.id = old_groups[0].id
-    app.group.modify_first_group(group)
+    index = randrange(len(old_groups))
+    group.id = old_groups[index].id
+    app.group.modify_group_by_index(group, index)
     # Метод .count() выступает в роли хэш-функции
     assert len(old_groups) == app.group.count()
     new_groups = app.group.get_group_list()
-    old_groups[0] = group
+    old_groups[index] = group
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 '''
