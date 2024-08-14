@@ -37,7 +37,9 @@ class ContactHelper:
 
     def open_editing_form_by_index(self, index):
         wd = self.app.wd
+        self.open_contact_table()
         wd.find_elements_by_css_selector("td.center:nth-child(8)")[index].click()
+
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -128,9 +130,10 @@ class ContactHelper:
                 lastname_info = element.find_element_by_css_selector("td:not([class]):nth-child(2)").text
                 firstname_info = element.find_element_by_css_selector("td:not([class]):nth-child(3)").text
                 phones_info = element.find_element_by_css_selector("td:not([class]):nth-child(6)").text
-                print(phones_info)
+                emails_info = element.find_element_by_css_selector("td:not([class]):nth-child(5)").text
                 self.contact_cache.append(Contact(firstname=firstname_info, lastname=lastname_info, id=id,
-                                                  all_phones_from_home_page=phones_info))
+                                                  all_phones_from_home_page=phones_info,
+                                                  all_emails_from_home_page=emails_info))
         return list(self.contact_cache)
 
 
@@ -144,9 +147,13 @@ class ContactHelper:
         mobile = wd.find_element_by_name("mobile").get_attribute("value")
         work = wd.find_element_by_name("work").get_attribute("value")
         #fax = wd.find_element_by_name("fax").get_attribute("value")
-        return Contact(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work)
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work,
+                       email=email, email2=email2, email3=email3)
 
-    def get_contact_from_view_page(self, index):
+    def get_contact_info_from_view_page(self, index):
         wd = self.app.wd
         self.open_contact_view_page_by_index(index)
         text = wd.find_element_by_id("content").text
@@ -154,4 +161,5 @@ class ContactHelper:
         mobile = re.search("M: (.*)", text).group(1)
         work =  re.search("W: (.*)", text).group(1)
         fax = re.search("F: (.*)", text).group(1)
+        #emails = re.search("\S+@\S+", text).group(2)
         return Contact(home=home, mobile=mobile, work=work, fax=fax)

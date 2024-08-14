@@ -3,7 +3,7 @@ from sys import maxsize
 class Contact:
     def __init__(self, firstname=None, middlename = None, lastname=None, address=None, email=None, email2=None, email3=None, nickname=None, company=None, title=None,
                        home=None, mobile=None, work=None, fax=None, homepage=None, bday=None, bmonth=None, byear=None, aday=None, amonth=None, ayear=None, id=None,
-                        all_phones_from_home_page=None):
+                        all_phones_from_home_page=None, all_emails_from_home_page=None):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -27,9 +27,10 @@ class Contact:
         self.ayear = ayear
         self.id = id
         self.all_phones_from_home_page = all_phones_from_home_page
+        self.all_emails_from_home_page = all_emails_from_home_page
 
     def __repr__(self):
-        return "%s:%s, %s" % (self.id, self.lastname, self.firstname)
+        return "%s:%s, %s, %s, %s" % (self.id, self.lastname, self.firstname, self.all_emails_from_home_page, self.all_phones_from_home_page)
 
     # Сравнение по содержимому
     def __eq__(self, other):
