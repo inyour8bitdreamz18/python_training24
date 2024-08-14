@@ -6,7 +6,7 @@ def test_modify_some_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="Firstname", lastname="Lastname"))
     old_contacts = app.contact.get_contact_list()
-    contact = Contact(firstname="Test_modify_firstname", lastname="Test_modify_lastname", address="", mobile="", email="",
+    contact = Contact(firstname="Test_modify_firstname", lastname="Test_modify_lastname", address="	Red square\n\n2098, str. le la Cocarde, 11?_!", mobile="", email="",
                                email2="", email3="", nickname="", company="", title="",
                                home="", work="", fax="", homepage="", bday="", bmonth="", byear="", aday="", amonth="", ayear="")
     index = randrange(len(old_contacts))
