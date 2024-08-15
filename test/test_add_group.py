@@ -26,7 +26,6 @@ testdata = [
 # ids - представляем данные группы в виде текста
 @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
 def test_add_group(app, group):
-    pass
     old_groups = app.group.get_group_list()
     app.group.create(group)
     # Метод .count() выступает в роли хэш-функции
