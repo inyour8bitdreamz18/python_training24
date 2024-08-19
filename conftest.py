@@ -11,7 +11,9 @@ def app(request):
     # Создает Фикстуру
     global fixture
     if fixture is None:
-        fixture = Application()
+        # Через объект request дали доступ к конфигам
+        browser = request.config.getoption("--browser")
+        fixture = Application(browser=browser)
     else:
         if not fixture.is_valid():
             fixture = Application()
@@ -31,3 +33,7 @@ def stop(request):
     request.addfinalizer(fin)
     # Возвращает Фикстуру
     return  fixture
+
+# Cохранили конфиги для вызова тестов через консоль
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="chrome")

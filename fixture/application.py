@@ -5,8 +5,17 @@ from fixture.contact import ContactHelper
 
 class Application:
 
-    def __init__(self):
-        self.wd = wd.Firefox()
+    def __init__(self, browser):
+        if browser == "firefox":
+             self.wd = wd.Firefox()
+        elif browser == "chrome":
+            self.wd = wd.Chrome()
+        elif browser == "ie":
+            self.wd = wd.Ie()
+        else:
+            raise ValueError("Unrecognized browser %s" % browser)
+
+
         #self.wd.implicitly_wait(30)
         #ссылка на файл SessionHelper, GroupHelper, ContactHelper
         self.session = SessionHelper(self)
@@ -15,7 +24,7 @@ class Application:
 
     def is_valid(self):
         try:
-            self.wd.current_url
+            self.wd.current_url()
             return True
         except:
             return False
