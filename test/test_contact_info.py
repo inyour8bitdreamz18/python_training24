@@ -11,10 +11,14 @@ def test_info_on_home_page(app):
     assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_edit_page)
     assert clear(contact_from_home_page.address) == clear(contact_from_edit_page.address)
 
-
-
 def clear(s):
+    return re.sub("[() -]", "", s)
+
+def clear_phones(s):
     return re.sub("[\s() -]", "", s)
+
+def clear_emails(s):
+    return re.sub("[\s()]", "", s)
 
 def merge_phones_like_on_home_page(contact):
     # Обратная проверка - (работа с данными в функциональном стиле)

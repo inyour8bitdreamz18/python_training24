@@ -10,13 +10,15 @@ fixture = None
 def app(request):
     # Создает Фикстуру
     global fixture
+    # Через объект request дали доступ к конфигам
+    browser = request.config.getoption("--browser")
+    base_url = request.config.getoption("--baseUrl")
     if fixture is None:
-        # Через объект request дали доступ к конфигам
-        browser = request.config.getoption("--browser")
-        fixture = Application(browser=browser)
+        fixture = Application(browser=browser, base_url=base_url)
     else:
         if not fixture.is_valid():
-            fixture = Application()
+            fixture = Application(browser=browser, base_url=base_url)
+    # Пароль админа нужно указывать при запуске и нигде не сохраняется
     fixture.session.ensure_login(username="admin", password="secret")
     return fixture
 
@@ -31,9 +33,9 @@ def stop(request):
         fixture.destroy()
 
     request.addfinalizer(fin)
-    # Возвращает Фикстуру
     return  fixture
 
 # Cохранили конфиги для вызова тестов через консоль
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
+    parser.addoption("--baseUrl", action="store", default="http://localhost/addressbook/")
