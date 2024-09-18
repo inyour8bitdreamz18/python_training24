@@ -17,7 +17,7 @@ def app(request):
     # Через объект request дали доступ к конфигам
     browser = request.config.getoption("--browser")
     if target is None:
-        # Сначала Преобразуем в абсолютный путь os.path.abspath(__file__), а затем найдем директорию os.path.dirname()
+        # Сначала преобразуем в абсолютный путь os.path.abspath(__file__), а затем найдем директорию os.path.dirname()
         # А потом приклеим наш путь с директорией к конфиг файлу (мы вычисляем путь относительно конфиг файла)
         # Теперь тесты будут запускаться вне зависимости от рабочей директории
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))

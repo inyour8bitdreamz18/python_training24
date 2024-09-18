@@ -1,28 +1,14 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
 import pytest
-import random
-import string
+from data.add_group import testdata
+# Можно импортировать отдельные переменные, переименовывать их (например для отладки)
+# from data.add_group import constant as testdata
+
+
 # Login, logout теперь хранятся в conftest
+# Testdata вынесено в отдельный python package data
 
-
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
-
-testdata = [Group(name="", header="", footer="")]+[
-    Group(name=random_string("name", 10), header=random_string("header", 20), footer=random_string("footer", 20))
-    for i in range(5)
-]
-'''
-Генерация комбинаций данных для группы
-testdata = [
-    Group(name=name, header=header, footer=footer)
-    for name in ["", random_string("name", 10)]
-    for header in ["", random_string("header", 20)]
-    for footer in ["", random_string("footer", 20)]
-]
-'''
 # ids - представляем данные группы в виде текста
 @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
 def test_add_group(app, group):
