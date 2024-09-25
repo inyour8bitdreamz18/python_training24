@@ -1,6 +1,7 @@
 #Здесь хранятся все вспомогательные методы для работы с контактами
 from model.contact import Contact
 import re
+from urllib3 import request
 
 class ContactHelper:
 
@@ -67,7 +68,8 @@ class ContactHelper:
     def open_contact_table(self):
         wd = self.app.wd
         if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_xpath("//input[@name='searchstring']")) > 0):
-            wd.get("http://localhost/addressbook/")
+            wd.get(self.app.base_url)
+
 
     def open_contact_view_page_by_index(self, index):
         wd = self.app.wd
