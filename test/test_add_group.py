@@ -1,21 +1,9 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-
-def test_add_group(app, data_groups):
-    group = data_groups
-    old_groups = app.group.get_group_list()
-    app.group.create(group)
-    # Метод .count() выступает в роли хэш-функции
-    assert len(old_groups) + 1 == app.group.count()
-    new_groups = app.group.get_group_list()
-    old_groups.append(group)
-    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+from data.groups import testdata
+import pytest
 
 
-
-'''
-# import pytest
-# from data.groups import testdata
 # Можно импортировать отдельные переменные, переименовывать их (например для отладки)
 # from data.add_group import constant as testdata
 
@@ -32,4 +20,5 @@ def test_add_group(app, group):
     new_groups = app.group.get_group_list()
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
-'''
+
+
