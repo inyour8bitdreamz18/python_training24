@@ -47,7 +47,7 @@ def stop(request):
 # Cохранили конфиги для вызова тестов через консоль
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
-    #parser.addoption("--baseUrl", action="store", default="http://localhost/addressbook/")
+    # Пароль, юзернейм и урл сохранили в отдельный файл target.json
     parser.addoption("--target", action="store", default="target.json")
 
 # Генератор тестов, где динамически подставляются параметры

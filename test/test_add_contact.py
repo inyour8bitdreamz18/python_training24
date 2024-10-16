@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
-import pytest
-from data.contacts import testdata
+
+
 
 # ids - представляем данные группы в виде текста
-@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
-def test_add_contact(app, contact):
+#@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
+def test_add_contact(app, data_contacts):
+    contact = data_contacts
     old_contacts = app.contact.get_contact_list()
     app.contact.create(contact)
     # Метод .count() выступает в роли хэш-функции
