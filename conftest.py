@@ -60,11 +60,18 @@ def stop(request):
     request.addfinalizer(fin)
     return fixture
 
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
+
 # Cохранили конфиги для вызова тестов через консоль
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     # Пароль, юзернейм и урл сохранили в отдельный файл target.json
     parser.addoption("--target", action="store", default="target.json")
+    # Флаг для
+    parser.addoption("--check_ui", action="store_true")
 
 # Генератор тестов, где динамически подставляются параметры
 def pytest_generate_tests(metafunc):
