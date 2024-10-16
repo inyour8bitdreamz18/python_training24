@@ -3,6 +3,9 @@ from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
 
+# Если нужно постоянно тестировать данные из БД, то добавляем DBHelper в Application
+# Если нет, то создаем отдельную фикстуру для работы с БД
+
 class Application:
 
     def __init__(self, browser, base_url):
