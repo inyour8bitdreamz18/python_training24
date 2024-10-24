@@ -25,12 +25,20 @@ class ContactHelper:
         wd = self.app.wd
         self.modify_contact_by_index(0)
 
+    def modify_contact_by_id(self, contact, id):
+        wd = self.app.wd
+        self.open_contact_table()
+        self.open_editing_form_by_id(id)
+        self.fill_contact_form(contact)
+        # submit contact editing
+        wd.find_element_by_name("update").click()
+        self.contact_cache = None
+
+
     def modify_contact_by_index(self, contact, index):
         wd = self.app.wd
         self.open_contact_table()
-        # open contact editing panel by index
         self.open_editing_form_by_index(index)
-        # fill data
         self.fill_contact_form(contact)
         # submit contact editing
         wd.find_element_by_name("update").click()
@@ -40,6 +48,12 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contact_table()
         wd.find_elements_by_css_selector("td.center:nth-child(8)")[index].click()
+
+    def open_editing_form_by_id(self, id):
+        wd = self.app.wd
+        self.open_contact_table()
+        #wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.find_element_by_css_selector("a[href ='edit.php?id=%s']" % id).click()
 
 
     def delete_first_contact(self):
@@ -54,10 +68,23 @@ class ContactHelper:
         #wd.switch_to.alert.accept()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_contact_table()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        #wd.switch_to.alert.accept()
+        self.contact_cache = None
+
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_css_selector("td.center:nth-child(1)")[index].click()
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        #wd.find_element_by_css_selector("td.center:nth-child(1)")[index].click()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
 
     def return_to_home_page(self):

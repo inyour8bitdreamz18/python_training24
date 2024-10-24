@@ -7,6 +7,7 @@ def test_delete_some_group(app, db, check_ui):
         app.group.create(Group(name="test"))
     old_groups = db.get_group_list()
     group = random.choice(old_groups)
+    # Так как сортировка по index и по id разные, сделали по id через db
     app.group.delete_group_by_id(group.id)
     new_groups = db.get_group_list()
     # Метод .count() выступает в роли хэш-функции

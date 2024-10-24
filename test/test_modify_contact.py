@@ -2,21 +2,23 @@ from model.contact import Contact
 from random import randrange
 # Login, logout теперь хранятся в conftest
 
-def test_modify_some_contact(app):
+def test_modify_some_contact(app, db, data_contacts, check_ui):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="Firstname", lastname="Lastname"))
-    old_contacts = app.contact.get_contact_list()
-    contact = Contact(firstname="Test_modify_firstname", lastname="Test_modify_lastname", address="	Red square\n\n2098, str. le la Cocarde, 11?_!", mobile="", email="",
-                               email2="", email3="", nickname="", company="", title="",
-                               home="", work="", fax="", homepage="", bday="", bmonth="", byear="", aday="", amonth="", ayear="")
-    index = randrange(len(old_contacts))
-    contact.id = old_contacts[index].id
-    app.contact.modify_contact_by_index(contact, index)
+    new_contact_data = data_contacts
+    old_contacts = db.get_contact_list()
+    contact_index = randrange(len(old_contacts))
+    contact = old_contacts[contact_index]
+    app.contact.modify_contact_by_id(new_contact_data, contact.id)
     # Метод .count() выступает в роли хэш-функции
-    assert len(old_contacts) == app.contact.count()
-    new_contacts = app.contact.get_contact_list()
-    old_contacts[index] = contact
-    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+    # assert len(old_contacts) == app.contact.count()
+    new_contacts = db.get_contact_list()
+    old_contacts[contact_index] = new_contact_data
+    assert old_contacts == new_contacts
+    if check_ui:
+        assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+
+
 '''
 def test_modify_first_contact_name(app):
     if app.contact.count() == 0:

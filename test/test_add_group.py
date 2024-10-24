@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
+import random
 
 # Можно импортировать отдельные переменные, переименовывать их (например для отладки)
 # from data.add_group import constant as testdata
@@ -10,7 +11,7 @@ from model.group import Group
 # ids - представляем данные группы в виде текста
 # @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata]) - убрали, так как сделали динам. связывание тестов с данными через фикстуры
 '''
-def test_add_group_py(app, data_groups):
+def test_add_group(app, data_groups):
     group = data_groups
     old_groups = app.group.get_group_list()
     app.group.create(group)
@@ -21,11 +22,15 @@ def test_add_group_py(app, data_groups):
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 '''
 
-def test_add_group_json(app, db, json_groups):
-    group = json_groups
+def test_add_group(app, db, data_groups, check_ui):
+    group = data_groups
     old_groups = db.get_group_list()
     app.group.create(group)
-    # Метод .count() выступает в роли хэш-функции
     new_groups = db.get_group_list()
+    # Убрали хэширование, так как он работает медленно
+    # Метод .count() выступает в роли хэш-функции
+    # assert len(old_groups) + 1 == len(db.get_group_list())
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+    if check_ui:
+        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)

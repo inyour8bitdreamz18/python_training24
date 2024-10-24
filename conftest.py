@@ -70,11 +70,12 @@ def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     # Пароль, юзернейм и урл сохранили в отдельный файл target.json
     parser.addoption("--target", action="store", default="target.json")
-    # Флаг для
+    # Флаг для проверки данных из web-application - в конфигах options просто пишем --check_ui
     parser.addoption("--check_ui", action="store_true")
 
 # Генератор тестов, где динамически подставляются параметры
 def pytest_generate_tests(metafunc):
+    print(metafunc.fixturenames)
     for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"):
             testdata = load_from_module(fixture[5:])
