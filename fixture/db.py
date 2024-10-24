@@ -31,15 +31,30 @@ class DbFixture:
         lst = []
         cursor = self.connection.cursor()
         try:
-            cursor.execute("select id, firstname, lastname from addressbook")  # where deprecated='NULL'
+            cursor.execute("select id, firstname, lastname, address, home, mobile, work, email, email2, email3 from addressbook")  # where deprecated='NULL'
             for row in cursor:
                 # Возращается кортеж - tuple
-                (id, firstname, lastname) = row
-                lst.append(Contact(id=str(id), firstname=firstname, lastname=lastname))
+                (id, firstname, lastname, address, home, mobile, work, email, email2, email3) = row
+                lst.append(Contact(id=str(id), firstname=firstname, lastname=lastname, address=address,
+                                   home=home, mobile=mobile, work=work, email=email, email2=email2, email3=email3))
 
         finally:
             cursor.close()
         return lst
+
+    def get_contact_by_id(self, id):
+        contact = None
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(f'''select id, firstname, lastname, address, home, mobile, work, email, email2, email3 from addressbook  where id={id}''')  # where deprecated='NULL'
+            for row in cursor:
+                # Возращается кортеж - tuple
+                (id, firstname, lastname, address, home, mobile, work, email, email2, email3) = row
+                contact = (Contact(id=str(id), firstname=firstname, lastname=lastname, address=address,
+                                   home=home, mobile=mobile, work=work, email=email, email2=email2, email3=email3))
+        finally:
+            cursor.close()
+        return contact
 
 
     def destroy(self):
