@@ -34,6 +34,18 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.contact_cache = None
 
+    def add_contact_in_group_by_id(self, id):
+        wd = self.app.wd
+        self.open_contact_table()
+        self.select_contact_by_id(id)
+        self.get_list_of_groups()
+
+
+        self.contact_cache = None
+
+    def get_list_of_groups(self):
+        wd = self.app.wd
+        wd.find_elements_by_css_selector("select[name=to_group]")
 
     def modify_contact_by_index(self, contact, index):
         wd = self.app.wd
