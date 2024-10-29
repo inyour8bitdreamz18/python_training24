@@ -1,6 +1,7 @@
 #Здесь хранятся все вспомогательные методы для работы с контактами
 from model.contact import Contact
 import re
+import random
 from urllib3 import request
 
 class ContactHelper:
@@ -34,18 +35,33 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.contact_cache = None
 
-    def add_contact_in_group_by_id(self, id):
+    def add_contact_to_group_by_id(self, contact_id, group_id):
         wd = self.app.wd
         self.open_contact_table()
-        self.select_contact_by_id(id)
-        self.get_list_of_groups()
-
-
+        self.select_contact_by_id(contact_id)
+        self.choose_group_by_id(group_id)
+        # Confirm to add the contact to selected group
+        wd.find_element_by_css_selector('input[name="add"]').click()
         self.contact_cache = None
-
+    '''
     def get_list_of_groups(self):
         wd = self.app.wd
-        wd.find_elements_by_css_selector("select[name=to_group]")
+        return wd.find_elements_by_css_selector("select[name=to_group]")
+    '''
+    def filter_contacts_by_group_id(self, id):
+        wd = self.app.wd
+        self.open_contact_table()
+        wd.find_element_by_css_selector(('[name=group]>option[value="%s"]' % id)).click()
+
+    def get_contact_list_by_group_filter(self, id):
+        wd = self.app.wd
+        self.open_contact_table()
+        self.filter_contacts_by_group_id(id)
+        return self.get_contact_list()
+
+    def choose_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector(('[name=to_group]>option[value="%s"]' % id)).click()
 
     def modify_contact_by_index(self, contact, index):
         wd = self.app.wd
