@@ -6,7 +6,6 @@ from model.contact import Contact
 
 class ORMFixture:
 
-
     db = Database()
     # Описание структуры таблицы
     class ORMGroup(db.Entity): # Привязываем этот класс с БД с помощью db.Entity

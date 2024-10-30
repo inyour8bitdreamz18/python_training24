@@ -42,7 +42,30 @@ class ContactHelper:
         self.choose_group_by_id(group_id)
         # Confirm to add the contact to selected group
         wd.find_element_by_css_selector('input[name="add"]').click()
+        self.choose_all_contacts_in_filter()
         self.contact_cache = None
+
+    def del_contact_from_group_by_id(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_contact_table()
+        self.filter_contacts_by_group_id(group_id)
+        self.select_contact_by_id(contact_id)
+        self.del_contact_from_group(group_id)
+        self.choose_all_contacts_in_filter()
+        self.contact_cache = None
+
+    def del_contact_from_group(self, group_id):
+        wd = self.app.wd
+        try:
+            wd.find_element_by_css_selector('input[name="remove"]').click()
+            wd.find_element_by_css_selector('a[href ="./?group=%s"]' % group_id).click()
+        except:
+            print("There is no button here")
+    def choose_all_contacts_in_filter(self):
+        wd = self.app.wd
+        self.open_contact_table()
+        wd.find_element_by_css_selector('[name=group]>option[value="[none]"]').click()
+
     '''
     def get_list_of_groups(self):
         wd = self.app.wd
@@ -111,7 +134,6 @@ class ContactHelper:
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
-        #wd.find_element_by_css_selector("td.center:nth-child(1)")[index].click()
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
 
