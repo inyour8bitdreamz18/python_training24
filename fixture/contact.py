@@ -173,7 +173,7 @@ class ContactHelper:
         self.change_field_value("lastname", contact.lastname)
         self.change_field_value("nickname", contact.nickname)
         self.change_field_value("title", contact.title)
-        # Нужно разобраться с address field в хроме ибо почему то форма закрывается сразу после внесения данных в адрес
+        # Нужно разобраться с address field в хроме ибо почему-то форма закрывается сразу после внесения данных в адрес
         self.change_field_value("address", contact.address)
         self.change_field_value("home", contact.home)
         self.change_field_value("mobile", contact.mobile)
