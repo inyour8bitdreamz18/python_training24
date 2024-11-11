@@ -1,4 +1,4 @@
-from selenium import wd
+from selenium import webdriver as wd
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
